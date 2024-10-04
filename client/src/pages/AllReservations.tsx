@@ -84,22 +84,35 @@ const reservationDataFormat: reservationInterface = {
 };
 
 export function AllReservations() {
+    
+
+
     return (
-        <Box p={80} >
-            <h1 className="text-3xl font-bold mb-4" style={{ paddingLeft: '20px' }}>View Reservations</h1>
+        <Box  >
+            <h1 className="text-3xl font-bold mb-4" style={{ paddingLeft: '20px'}}>View Reservations</h1>
             <Tabs color="#052e16" variant="pills" defaultValue="view" >
-                <Tabs.List style={{ paddingLeft: '20px', paddingTop: '10px' }}>
-                    <Tabs.Tab value="view">Today's Reservations</Tabs.Tab>
-                    <Tabs.Tab value="today">All Reservations</Tabs.Tab> 
+                <Tabs.List style={{ paddingLeft: '20px', paddingTop: '20px' }}>
+                    <Tabs.Tab value="today">Today's Reservations</Tabs.Tab>
+                    <Tabs.Tab value="view">All Reservations</Tabs.Tab> 
                 </Tabs.List>
 
                 <Tabs.Panel value="view">
                     <ReservationTableCreator
                         config={{
-                            format: reservationDataFormat, // Format structure for the table
-                            page: 'all_reservations',      // Page identifier, if needed
+                            format: reservationDataFormat, 
+                            page: 'all_reservations',      
                         }}
-                        data={sampleReservations}        // Pass sample reservations data
+                        data={sampleReservations}        
+                    />
+                </Tabs.Panel>
+
+                <Tabs.Panel value="today">
+                    <ReservationTableCreator
+                        config={{
+                            format: reservationDataFormat, 
+                            page: 'today_reservations',      
+                        }}
+                        data={sampleReservations}        
                     />
                 </Tabs.Panel>
             </Tabs>

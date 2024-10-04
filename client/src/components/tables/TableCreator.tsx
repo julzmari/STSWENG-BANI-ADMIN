@@ -61,6 +61,34 @@ const sampleData = [
         totalAmount: 10000,
         amountPaid: 4500,
         arrivalStatus: "Pending",
+    },{
+        reservationRefNum: "ABC126",
+        checkInDate: "2024-10-3",
+        checkOutDate: "2024-10-5",
+        adults: 6,
+        children: 0,
+        totalGuests: 6,
+        pets: true,
+        clientId: "C010",
+        roomId: "Room 9",
+        notes: "",
+        totalAmount: 10000,
+        amountPaid: 10000,
+        arrivalStatus: "Checked-In",
+    },{
+        reservationRefNum: "ABC127",
+        checkInDate: "2024-10-4",
+        checkOutDate: "2024-10-12",
+        adults: 6,
+        children: 0,
+        totalGuests: 6,
+        pets: true,
+        clientId: "C015",
+        roomId: "Room 8",
+        notes: "",
+        totalAmount: 10000,
+        amountPaid: 1000,
+        arrivalStatus: "Pending",
     },
     // More sample reservations can be added here
 ];
@@ -71,63 +99,63 @@ export function ReservationTableCreator() {
         {
             accessorKey: 'reservationRefNum',
             header: 'Reservation Ref No.',
-            size: 200,
+            //size: 200,
         }, 
         {
             accessorKey: 'roomId',
             header: 'Room ID',
-            size: 200,
+            //size: 200,
         },
         {
             accessorKey: 'checkInDate',
             header: 'Check-in Date',
-            size: 200,
+            //size: 200,
         },
         {
             accessorKey: 'checkOutDate',
             header: 'Check-out Date',
-            size: 200,
+            //size: 200,
         },
         {
             accessorKey: 'adults',
             header: '# of Adults',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'children',
             header: '# of Kids',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'totalGuests',
             header: 'Total Guests',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'pets',
             header: 'Pets Allowed',
-            size: 150,
+            //size: 150,
             Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
         },
         {
             accessorKey: 'totalAmount',
             header: 'Total Amount',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'amountPaid',
             header: 'Amount Paid',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'arrivalStatus',
             header: 'Arrival Status',
-            size: 150,
+            //size: 150,
         },
         {
             accessorKey: 'paymentStatus',
             header: 'Payment Status',
-            size: 150,
+            //size: 150,
             Cell: ({ row }) => {
                 const totalAmount = row.original.totalAmount;
                 const amountPaid = row.original.amountPaid;
@@ -146,20 +174,19 @@ export function ReservationTableCreator() {
         {
             accessorKey: 'notes',
             header: 'Notes',
-            size: 150,
+            //size: 150,
         },
     ], []);
 
     return (
-        <>
-            {/* Render MantineReactTable */}
+        <div className="table-container">
             <MantineReactTable
                 columns={columns}
                 data={sampleData}
-                enablePagination={false} // Disable pagination as per your config
-                enableRowActions={false}  // Disable row actions
+                enablePagination={false}
+                enableRowActions={false}
                 positionActionsColumn='first'
             />
-        </>
+        </div>
     );
 }
