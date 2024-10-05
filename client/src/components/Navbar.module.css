@@ -23,23 +23,21 @@
 }
 
 .link {
+  padding: 10px;
   font-family: "Inter", sans-serif;
   margin-left: 10px;
   margin-right: 10px;
   display: block;
   line-height: 1;
   padding: rem(8px) rem(12px);
-  border-radius: var(--mantine-radius-sm);
+  border-radius: var(--mantine-radius-md);
   text-decoration: none;
   color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-0));
   font-size: var(--mantine-font-size-xl);
   font-weight: 500;
 
-  @mixin hover {
-    color: var(--mantine-color-orange-3);
-  }
-
   [data-mantine-color-scheme] &[data-active] {
-    color: var(--mantine-color-orange-3);
+    background-color: var(--mantine-color-orange-1);
+    color: var(--mantine-color-orange-8);
   }
 }
