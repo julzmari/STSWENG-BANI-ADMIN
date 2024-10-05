@@ -6,7 +6,7 @@ import { Image } from '@mantine/core';
 
 const links = [
   { link: '/', label: 'Dashboard' },
-  { link: '/allreservations', label: 'All Reservations' },
+  { link: '/allreservations', label: 'Reservation History' },
   { link: '/rooms', label: 'Rooms' },
   { link: '/logout', label: 'Log Out' },
 ];
