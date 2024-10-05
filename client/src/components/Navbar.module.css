@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 .header {
-  width: max-content;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #022846;
+  width: 100%;
   height: rem(56px);
   margin-bottom: rem(120px);
-  background-color: var(--mantine-color-body);
+
   border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
 
@@ -18,22 +23,23 @@
 }
 
 .link {
+  font-family: "Inter", sans-serif;
+  margin-left: 10px;
+  margin-right: 10px;
   display: block;
   line-height: 1;
   padding: rem(8px) rem(12px);
   border-radius: var(--mantine-radius-sm);
   text-decoration: none;
-  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-  font-size: var(--mantine-font-size-sm);
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-0));
+  font-size: var(--mantine-font-size-xl);
   font-weight: 500;
 
   @mixin hover {
-    background-color: light-dark(var(--mantine-color-orange-0), var(--mantine-color-dark-6));
-    color: var(--mantine-color-orange-filled);
+    color: var(--mantine-color-orange-3);
   }
 
   [data-mantine-color-scheme] &[data-active] {
-    background-color: var(--mantine-color-orange-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-color-orange-3);
   }
 }

@@ -13,13 +13,11 @@ export function AllReservations() {
                 </Tabs.List>
 
                 <Tabs.Panel value="view">
-                    <ReservationTableCreator      
-                    />
+                    <ReservationTableCreator/>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="today">
-                    <ReservationTableCreator      
-                    />
+                    <ReservationTableCreator/>
                 </Tabs.Panel>
             </Tabs>
         </Box>

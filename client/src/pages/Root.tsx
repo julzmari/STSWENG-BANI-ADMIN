@@ -3,12 +3,13 @@ import { Navbar } from "../components/Navbar";
 
 export function Root () {
     return (
-        <>
-
-                <Navbar/>
-
-
-            <Outlet/>
-        </>
+        <div >
+            
+              <Navbar/>  
+            
+            <div className="mr-[15px] ml-[15px]">
+                <Outlet/>
+            </div>
+        </div>
     )
 }

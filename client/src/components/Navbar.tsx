@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Container, Group, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Navbar.module.css';
 import { Image } from '@mantine/core';
 
 const links = [
-  { link: '/about', label: 'Features' },
-  { link: '/pricing', label: 'Pricing' },
-  { link: '/learn', label: 'Learn' },
-  { link: '/community', label: 'Community' },
+  { link: '/', label: 'Dashboard' },
+  { link: '/allreservations', label: 'All Reservations' },
+  { link: '/rooms', label: 'Rooms' },
+  { link: '/logout', label: 'Log Out' },
 ];
 
 export function Navbar() {
@@ -34,7 +33,7 @@ export function Navbar() {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
-        <Image src={'./images/navbar-logo.png'} h={'100'}/>
+        <Image src={'./images/navbar-logo.png'} h={'70'}/>
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>
