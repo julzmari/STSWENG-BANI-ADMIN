@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import {createBrowserRouter, RouterProvider, Navigate} from "react-router-dom"; //added navigate for route navigation
 
 import './index.css'
 
@@ -15,17 +15,33 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { Root } from './pages/Root';
 import { AllReservations } from './pages/AllReservations';
 
+//login is export def so no { } lmrc
+import Login from './pages/Login';
+
+const isAuthenticated = () => {
+    return !!localStorage.getItem('authToken'); // Checks if authenticated
+  };
+
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+    return isAuthenticated() ? children : <Navigate to="/login" />;
+  };
+//lmrc
+
 const router = createBrowserRouter([
     {
-        element: <Root />,
-        children: [
-          {
-            path: '/',
-            element: <AllReservations />
-          },
-        ]
+      element: <Root />,
+      children: [
+        {
+          path: '/',
+          element: <ProtectedRoute><AllReservations /></ProtectedRoute> // wraps dashboard route, this should be used on all routes lmrc
+        },
+        {
+          path: '/login',
+          element: <Login /> // public
+        }
+      ]
     },
-]);
+  ]);
 
 const queryClient:QueryClient = new QueryClient({
     defaultOptions: {
