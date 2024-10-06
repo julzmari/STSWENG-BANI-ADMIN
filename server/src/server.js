@@ -9,6 +9,8 @@ app.use(express.static("public"));
 app.use(express.json())
 app.use(bodyParser.json());
 
+const roomData = require("./models/sampledata/roomData.json")
+
 app.get('/', async function (req, res) {
 
   const clientCount = await Client.countDocuments();
@@ -32,15 +34,15 @@ app.get('/', async function (req, res) {
 
   const roomCount = await Room.countDocuments();
         if (roomCount === 0) {
-            const newRoom = new Room({
-                "roomId": "R001",
-                "bedType": "Double",
-                "pax": 2,
-                "price": 120.50
-              });
-
-              await newRoom.save();
-            console.log('Room created:', newRoom);
+            
+            Room.insertMany(roomData)
+            .then((rooms) => {
+                console.log('Imported rooms:', rooms);
+            })
+            .catch((err) => {
+                console.error('Error importing data:', err);
+            });
+            
         } else {
             console.log('Room already exists.');
         }
@@ -57,7 +59,7 @@ app.get('/', async function (req, res) {
                 "numberOfGuests": 3,
                 "pets": false,
                 "clientId": "C12345",
-                "roomId": "R001",
+                "roomId": "Room 1",
                 "otherNotes": "Prefer a quiet room with a view.",
                 "adminNotes": "Confirmed by admin, no special requests."
               });
