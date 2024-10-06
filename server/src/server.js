@@ -13,14 +13,16 @@ app.get('/', async function (req, res) {
 
   const clientCount = await Client.countDocuments();
         if (clientCount === 0) {
-            const newClient = new Client({
-                clientId: 'C123456',
-                firstName: 'John',
-                lastName: 'Doe',
-                contactNumber: '+1234567890',
-                email: 'john.doe@example.com',
-                address: '123 Main St, Springfield, USA',
-            });
+            const newClient = new Client(
+                {
+                    "clientId": "C12345",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "contactNumber": "+1234567890",
+                    "email": "john.doe@example.com",
+                    "address": "123 Main Street, Cityville, Countryland"
+                }
+            );
 
             await newClient.save();
             console.log('Client created:', newClient);
@@ -31,12 +33,13 @@ app.get('/', async function (req, res) {
   const roomCount = await Room.countDocuments();
         if (roomCount === 0) {
             const newRoom = new Room({
-                roomId: 'R1001',
-                bedType: 'Single',
-                pax: 1,
-            });
+                "roomId": "R001",
+                "bedType": "Double",
+                "pax": 2,
+                "price": 120.50
+              });
 
-            await newRoom.save();
+              await newRoom.save();
             console.log('Room created:', newRoom);
         } else {
             console.log('Room already exists.');
@@ -46,17 +49,18 @@ app.get('/', async function (req, res) {
         const reservationCount = await Reservation.countDocuments();
         if (reservationCount === 0) {
             const newReservation = new Reservation({
-                referenceNo: 'RES001',
-                checkInDate: new Date('2024-10-10T15:00:00Z'),
-                checkOutDate: new Date('2024-10-15T11:00:00Z'),
-                numberOfAdults: 2,
-                numberOfChildren: 1,
-                numberOfGuests: 3,
-                pets: false,
-                clientId: 'C123456', // Use the client ID created earlier
-                roomId: 'R1001',     // Use the room ID created earlier
-                otherNotes: 'Late check-in requested',
-            });
+                "referenceNo": "R123456789",
+                "checkInDate": "2024-10-10T14:00:00Z",
+                "checkOutDate": "2024-10-15T11:00:00Z",
+                "numberOfAdults": 2,
+                "numberOfChildren": 1,
+                "numberOfGuests": 3,
+                "pets": false,
+                "clientId": "C12345",
+                "roomId": "R001",
+                "otherNotes": "Prefer a quiet room with a view.",
+                "adminNotes": "Confirmed by admin, no special requests."
+              });
 
             await newReservation.save();
             console.log('Reservation created:', newReservation);

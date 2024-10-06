@@ -41,13 +41,16 @@ const roomSchema = new mongoose.Schema({
     },
     bedType: {
         type: String,
-        enum: ['Single', 'Double', 'Suite'], 
+        enum: ['Single', 'Number', 'Suite', 'Double'], 
         required: true
     },
     pax: {
         type: Number,
         required: true,
-        min: 1
+    },
+    price: {
+        type: Number,
+        required: true,
     }
 },  {
     timestamps: true
@@ -98,7 +101,10 @@ const reservationSchema = new mongoose.Schema({
     },
     otherNotes: {
         type: String
-    }
+    },
+    adminNotes: {
+        type: String
+    },
 },  {
     timestamps: true
 });
