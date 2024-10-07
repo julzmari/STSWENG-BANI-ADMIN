@@ -116,10 +116,20 @@ const reservationSchema = new mongoose.Schema({
         required: true,
         ref: 'Room' // Reference to Room model
     },
-    otherNotes: {
-        type: String
+    totalAmount: {
+        type: Double,
+        required: true
     },
-    adminNotes: {
+    amountPaid: {
+        type: Double,
+        required: true
+    },
+    arrivalStatus: {
+        type: String,
+        enum: ["Booked", "Checked-in", "Checked-out"],
+        required: true
+    },
+    otherNotes: {
         type: String
     },
 },  {
