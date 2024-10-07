@@ -10,7 +10,10 @@
         "clientId": "C001",
         "roomId": "Room 1",
         "otherNotes": "Late check-in requested.",
-        "adminNotes": "VIP client."
+        "adminNotes": "VIP client.",
+        "totalAmount": 1200.00,
+        "amountPaid": 1200.00,
+        "arrivalStatus": "Booked"
     },
     {
         "referenceNo": "R002",
@@ -23,7 +26,10 @@
         "clientId": "C002",
         "roomId": "Room 6",
         "otherNotes": "Needs extra bedding.",
-        "adminNotes": ""
+        "adminNotes": "",
+        "totalAmount": 800.00,
+        "amountPaid": 400.00,
+        "arrivalStatus": "Booked"
     },
     {
         "referenceNo": "R003",
@@ -36,6 +42,9 @@
         "clientId": "C003",
         "roomId": "Villa",
         "otherNotes": "Celebrating a birthday.",
-        "adminNotes": "Arrange for a cake."
+        "adminNotes": "Arrange for a cake.",
+        "totalAmount": 2500.00,
+        "amountPaid": 0.00,
+        "arrivalStatus": "Booked"
     }
 ]

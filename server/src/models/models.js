@@ -117,11 +117,11 @@ const reservationSchema = new mongoose.Schema({
         ref: 'Room' // Reference to Room model
     },
     totalAmount: {
-        type: Double,
+        type: Number,
         required: true
     },
     amountPaid: {
-        type: Double,
+        type: Number,
         required: true
     },
     arrivalStatus: {
@@ -130,6 +130,9 @@ const reservationSchema = new mongoose.Schema({
         required: true
     },
     otherNotes: {
+        type: String
+    },
+    adminNotes: {
         type: String
     },
 },  {
