@@ -30,14 +30,14 @@
   display: block;
   line-height: 1;
   padding: rem(8px) rem(12px);
-  border-radius: var(--mantine-radius-md);
+  border-radius: var(--mantine-radius-xl);
   text-decoration: none;
   color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-0));
   font-size: var(--mantine-font-size-xl);
   font-weight: 500;
 
   [data-mantine-color-scheme] &[data-active] {
-    background-color: var(--mantine-color-orange-1);
-    color: var(--mantine-color-orange-8);
+    background-color: #2C7BBA;
+    color: white;
   }
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Container, Group, Burger } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Container, Group } from '@mantine/core';
 import classes from './Navbar.module.css';
 import { Image } from '@mantine/core';
 
