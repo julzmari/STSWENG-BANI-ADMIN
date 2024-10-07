@@ -15,7 +15,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { Root } from './pages/Root';
 import { AllReservations } from './pages/AllReservations';
 
-//login is export def so no { } lmrc
+//login is export def so no { } 
 import Login from './pages/Login';
 
 const isAuthenticated = () => {
@@ -25,7 +25,7 @@ const isAuthenticated = () => {
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     return isAuthenticated() ? children : <Navigate to="/login" />;
   };
-//lmrc
+//
 
 const router = createBrowserRouter([
     {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       children: [
         {
           path: '/',
-          element: <ProtectedRoute><AllReservations /></ProtectedRoute> // wraps dashboard route, this should be used on all routes lmrc
+          element: <ProtectedRoute><AllReservations /></ProtectedRoute> // wraps dashboard route, this should be used on all routes 
         },
         {
           path: '/login',

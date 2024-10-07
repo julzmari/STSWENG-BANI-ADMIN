@@ -1,4 +1,15 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+// Admin Schema
+const adminSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }, 
+  });
+
+adminSchema.methods.checkPassword = async function(candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
 
 // Client Schema
 const clientSchema = new mongoose.Schema({
@@ -129,5 +140,6 @@ const reservationSchema = new mongoose.Schema({
 const Client = mongoose.model('Client', clientSchema);
 const Room = mongoose.model('Room', roomSchema);
 const Reservation = mongoose.model('Reservation', reservationSchema);
+const Admin = mongoose.model('Admin', adminSchema);
 
-module.exports = { Client, Room, Reservation };
+module.exports = { Client, Room, Reservation, Admin };
