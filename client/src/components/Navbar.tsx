@@ -4,6 +4,10 @@ import { useDisclosure } from '@mantine/hooks';
 import classes from './Navbar.module.css';
 import { Image } from '@mantine/core';
 
+//lmrc
+import { useNavigate } from 'react-router-dom';
+//lmrc
+
 const links = [
   { link: '/', label: 'Dashboard' },
   { link: '/allreservations', label: 'Reservation History' },
@@ -15,6 +19,16 @@ export function Navbar() {
 
   const [active, setActive] = useState(links[0].link);
 
+  //lmrc
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+  };
+  //lmrc
+
+
   const items = links.map((link) => (
     <a
       key={link.label}
@@ -23,7 +37,13 @@ export function Navbar() {
       data-active={active === link.link || undefined}
       onClick={(event) => {
         event.preventDefault();
-        setActive(link.link);
+        // replacing - setActive(link.link); lmrc
+        if (link.link === '/logout') {
+          handleLogout(); 
+        } else {
+          setActive(link.link);
+          navigate(link.link);  // Use navigate to switch pages lmrc
+        }
       }}
     >
       {link.label}
