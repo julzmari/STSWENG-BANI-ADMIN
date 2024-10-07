@@ -1,0 +1,26 @@
+[
+    {
+        "clientId": "C001",
+        "firstName": "John",
+        "lastName": "Doe",
+        "contactNumber": "+639123456789",
+        "email": "john.doe@example.com",
+        "address": "123 Main St, Manila, Philippines"
+    },
+    {
+        "clientId": "C002",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "contactNumber": "+639876543210",
+        "email": "jane.smith@example.com",
+        "address": "456 Elm St, Quezon City, Manila, Philippines"
+    },
+    {
+        "clientId": "C003",
+        "firstName": "Emily",
+        "lastName": "Johnson",
+        "contactNumber": "+6391122334455",
+        "email": "emily.johnson@example.com",
+        "address": "789 Maple Ave, Makati, Manila, Philippines"
+    }
+]

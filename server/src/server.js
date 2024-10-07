@@ -9,59 +9,57 @@ app.use(express.static("public"));
 app.use(express.json())
 app.use(bodyParser.json());
 
+const roomData = require("./models/sampledata/roomData.json")
+const clientData = require("./models/sampledata/clientData.json")
+const reservationData = require("./models/sampledata/reservationData.json")
+
+
 app.get('/', async function (req, res) {
 
   const clientCount = await Client.countDocuments();
         if (clientCount === 0) {
-            const newClient = new Client({
-                clientId: 'C123456',
-                firstName: 'John',
-                lastName: 'Doe',
-                contactNumber: '+1234567890',
-                email: 'john.doe@example.com',
-                address: '123 Main St, Springfield, USA',
+
+            Client.insertMany(clientData)
+            .then((clients) => {
+                console.log('Imported clients:', clients);
+            })
+            .catch((err) => {
+                console.error('Error importing data:', err);
             });
 
-            await newClient.save();
-            console.log('Client created:', newClient);
         } else {
-            console.log('Client already exists.');
+            console.log('Sample client data already imported.');
         }
 
   const roomCount = await Room.countDocuments();
         if (roomCount === 0) {
-            const newRoom = new Room({
-                roomId: 'R1001',
-                bedType: 'Single',
-                pax: 1,
+            
+            Room.insertMany(roomData)
+            .then((rooms) => {
+                console.log('Imported rooms:', rooms);
+            })
+            .catch((err) => {
+                console.error('Error importing data:', err);
             });
-
-            await newRoom.save();
-            console.log('Room created:', newRoom);
+            
         } else {
-            console.log('Room already exists.');
+            console.log('Sample room data already imported.');
         }
 
         // Check and create Reservation if none exists
         const reservationCount = await Reservation.countDocuments();
         if (reservationCount === 0) {
-            const newReservation = new Reservation({
-                referenceNo: 'RES001',
-                checkInDate: new Date('2024-10-10T15:00:00Z'),
-                checkOutDate: new Date('2024-10-15T11:00:00Z'),
-                numberOfAdults: 2,
-                numberOfChildren: 1,
-                numberOfGuests: 3,
-                pets: false,
-                clientId: 'C123456', // Use the client ID created earlier
-                roomId: 'R1001',     // Use the room ID created earlier
-                otherNotes: 'Late check-in requested',
+            
+            Reservation.insertMany(reservationData)
+            .then((reservations) => {
+                console.log('Imported reservations:', reservations);
+            })
+            .catch((err) => {
+                console.error('Error importing data:', err);
             });
 
-            await newReservation.save();
-            console.log('Reservation created:', newReservation);
         } else {
-            console.log('Reservation already exists.');
+            console.log('Sample reservation data already imported.');
         }
 })
 

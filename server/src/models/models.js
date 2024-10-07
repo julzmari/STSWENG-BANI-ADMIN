@@ -39,15 +39,35 @@ const roomSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    floor: {
+        type: Number,
+        enum: [1, 2],
+        required: true,
+    },
     bedType: {
         type: String,
-        enum: ['Single', 'Double', 'Suite'], 
+        enum: ['Queen', 'King'],
         required: true
+    },
+    bedNum: {
+        type: Number,
+        required: true,
     },
     pax: {
         type: Number,
         required: true,
-        min: 1
+    },
+    maxPax: {
+        type: Number,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    additionalPrice: {
+        type: Number,
+        required: true,
     }
 },  {
     timestamps: true
@@ -96,9 +116,25 @@ const reservationSchema = new mongoose.Schema({
         required: true,
         ref: 'Room' // Reference to Room model
     },
+    totalAmount: {
+        type: Number,
+        required: true
+    },
+    amountPaid: {
+        type: Number,
+        required: true
+    },
+    arrivalStatus: {
+        type: String,
+        enum: ["Booked", "Checked-in", "Checked-out"],
+        required: true
+    },
     otherNotes: {
         type: String
-    }
+    },
+    adminNotes: {
+        type: String
+    },
 },  {
     timestamps: true
 });
