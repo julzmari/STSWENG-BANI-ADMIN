@@ -8,9 +8,9 @@ dotenv.config()
 mongoose.connect(process.env.MONGO_URI); 
 
 async function seedUser() {
-    const hashedPassword = await bcrypt.hash('admintest123', 10); 
+    const hashedPassword = await bcrypt.hash('happyhappy', 10); 
     const newAdmin = new Admin({
-      username: 'admin@example.com',  
+      username: 'Leomarc',  
       password: hashedPassword,     
     });
 

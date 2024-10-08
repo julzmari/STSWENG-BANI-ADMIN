@@ -1,16 +1,45 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Client, Room, Reservation } = require('./models/models.js')
+//encryption
+const bcrypt = require('bcrypt');
+const { Client, Room, Reservation, Admin } = require('./models/models.js')
 
+//add cors for comm between diff ports
+const cors = require('cors');
 const app = express()
 const PORT = 3000
 
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.json())
 app.use(bodyParser.json());
 
 const roomData = require("./models/sampledata/roomData.json")
 
+// for login validation
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;  // Get username and password from request body
+  
+    try {
+      // search by name
+      const admin = await Admin.findOne({ username });
+      if (!admin) {
+        return res.status(400).json({ message: 'Invalid username or password test-user' });
+      }
+  
+      // check password
+      const isMatch = await bcrypt.compare(password, admin.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid username or password test-password' });
+      }
+  
+      // return success message + token
+      res.json({ message: 'Login successful', token: 'mockAuthToken' });  // replace with actual token l8r
+    } catch (error) {
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+// for login validation
 app.get('/', async function (req, res) {
 
   const clientCount = await Client.countDocuments();

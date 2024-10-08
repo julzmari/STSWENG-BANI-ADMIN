@@ -7,9 +7,6 @@ const adminSchema = new mongoose.Schema({
     password: { type: String, required: true }, 
   });
 
-adminSchema.methods.checkPassword = async function(candidatePassword) {
-    return await bcrypt.compare(candidatePassword, this.password);
-};
 
 // Client Schema
 const clientSchema = new mongoose.Schema({
