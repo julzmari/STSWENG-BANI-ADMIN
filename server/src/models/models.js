@@ -47,11 +47,11 @@ const roomSchema = new mongoose.Schema({
     bedType: {
         type: String,
         enum: ['Queen', 'King'],
-        required: true
+        required: false
     },
     bedNum: {
         type: Number,
-        required: true,
+        required: false,
     },
     pax: {
         type: Number,
@@ -67,7 +67,7 @@ const roomSchema = new mongoose.Schema({
     },
     additionalPrice: {
         type: Number,
-        required: true,
+        required: false,
     }
 },  {
     timestamps: true

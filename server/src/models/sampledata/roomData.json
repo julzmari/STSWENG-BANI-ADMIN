@@ -98,5 +98,12 @@
         "maxPax": 8,
         "price": 15000.00,
         "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Hanging Kubo",
+        "floor": 1,
+        "pax": 5,
+        "maxPax": 5,
+        "price": 5000.00
     }
 ]
