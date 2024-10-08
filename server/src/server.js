@@ -13,7 +13,7 @@ const roomData = require("./models/sampledata/roomData.json")
 const clientData = require("./models/sampledata/clientData.json")
 const reservationData = require("./models/sampledata/reservationData.json")
 
-
+//check if the data has been loaded
 app.get('/', async function (req, res) {
 
   const clientCount = await Client.countDocuments();
@@ -30,7 +30,7 @@ app.get('/', async function (req, res) {
         } else {
             console.log('Sample client data already imported.');
         }
-
+    
   const roomCount = await Room.countDocuments();
         if (roomCount === 0) {
             
@@ -61,6 +61,26 @@ app.get('/', async function (req, res) {
         } else {
             console.log('Sample reservation data already imported.');
         }
+})
+
+//gets reservations from the database and brings them to the reservationData page
+app.get ('/api/get-reservations', async function (req, res){
+
+    try{
+
+        const reservationData = await Reservation.find({});
+
+        console.log(reservationData);
+
+        return res.end(JSON.stringify(reservationData));
+
+    }
+    catch(error){
+
+        console.error("An error occured when retrieving reservations:\n", error);
+        res.status(500).send("Internal Server Error");
+    }
+
 })
 
 module.exports = {app, PORT}

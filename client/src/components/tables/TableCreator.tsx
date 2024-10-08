@@ -93,8 +93,58 @@ const sampleData = [
     // More sample reservations can be added here
 ];
 
-export function ReservationTableCreator() {
+// export interface remappedReservations {
+//     reservationRefNum: string,
+//     checkInDate: string,
+//     checkOutDate: string,
+//     adults: number,
+//     children: number,
+//     totalGuests: number,
+//     pets: boolean,
+//     clientId: string,
+//     roomId: string,
+//     notes: string,
+//     totalAmount: number,
+//     amountPaid: number,
+//     arrivalStatus: string,
+// }
+
+export interface reservationResponseData {
+    referenceNo?: string;
+    checkInDate?: string;
+    checkOutDate?: string;
+    numberOfAdults?: number;
+    numberOfChildren?: number;
+    numberOfGuests?: number;
+    pets?: boolean;
+    clientId?: string;
+    roomId?: string;
+    adminNotes?: string;
+    totalAmount?: number;
+    amountPaid?: number;
+    arrivalStatus?: string;
+}
+
+export function ReservationTableCreator(props: {reservations: reservationResponseData[]}) {
     // Memoize the columns
+
+    const remapped = props.reservations.map( (reservation: reservationResponseData) => {
+        return {
+            reservationRefNum: reservation.referenceNo,
+            checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
+            checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
+            adults: reservation.numberOfAdults,
+            children: reservation.numberOfChildren,
+            totalGuests: reservation.numberOfGuests,
+            pets: reservation.pets,
+            clientId: reservation.clientId,
+            roomId: reservation.roomId,
+            notes: reservation.adminNotes,
+            totalAmount: reservation.totalAmount,
+            amountPaid: reservation.amountPaid,
+            arrivalStatus: reservation.arrivalStatus
+    }})
+    
     const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
         {
             accessorKey: 'reservationRefNum',
@@ -182,7 +232,7 @@ export function ReservationTableCreator() {
         <div className="table-container">
             <MantineReactTable
                 columns={columns}
-                data={sampleData}
+                data={remapped}
                 enablePagination={false}
                 enableRowActions={false}
                 positionActionsColumn='first'
