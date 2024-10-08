@@ -1,6 +1,6 @@
 [
     {
-        "clientId": "C001",
+        "clientId": "C00000001",
         "firstName": "John",
         "lastName": "Doe",
         "contactNumber": "+639123456789",
@@ -8,7 +8,7 @@
         "address": "123 Main St, Manila, Philippines"
     },
     {
-        "clientId": "C002",
+        "clientId": "C00000002",
         "firstName": "Jane",
         "lastName": "Smith",
         "contactNumber": "+639876543210",
@@ -16,7 +16,7 @@
         "address": "456 Elm St, Quezon City, Manila, Philippines"
     },
     {
-        "clientId": "C003",
+        "clientId": "C00000003",
         "firstName": "Emily",
         "lastName": "Johnson",
         "contactNumber": "+6391122334455",
