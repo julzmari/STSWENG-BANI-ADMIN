@@ -93,22 +93,6 @@ const sampleData = [
     // More sample reservations can be added here
 ];
 
-// export interface remappedReservations {
-//     reservationRefNum: string,
-//     checkInDate: string,
-//     checkOutDate: string,
-//     adults: number,
-//     children: number,
-//     totalGuests: number,
-//     pets: boolean,
-//     clientId: string,
-//     roomId: string,
-//     notes: string,
-//     totalAmount: number,
-//     amountPaid: number,
-//     arrivalStatus: string,
-// }
-
 export interface reservationResponseData {
     referenceNo?: string;
     checkInDate?: string;
@@ -126,8 +110,6 @@ export interface reservationResponseData {
 }
 
 export function ReservationTableCreator(props: {reservations: reservationResponseData[]}) {
-    // Memoize the columns
-
     const remapped = props.reservations.map( (reservation: reservationResponseData) => {
         return {
             reservationRefNum: reservation.referenceNo,
@@ -143,8 +125,129 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
             totalAmount: reservation.totalAmount,
             amountPaid: reservation.amountPaid,
             arrivalStatus: reservation.arrivalStatus
-    }})
-    
+        }
+    })
+
+    // Memorize the columns
+    const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
+        {
+            accessorKey: 'reservationRefNum',
+            header: 'Reservation Ref No.',
+            //size: 200,
+        }, 
+        {
+            accessorKey: 'roomId',
+            header: 'Room ID',
+            //size: 200,
+        },
+        {
+            accessorKey: 'checkInDate',
+            header: 'Check-in Date',
+            //size: 200,
+        },
+        {
+            accessorKey: 'checkOutDate',
+            header: 'Check-out Date',
+            //size: 200,
+        },
+        {
+            accessorKey: 'adults',
+            header: '# of Adults',
+            //size: 150,
+        },
+        {
+            accessorKey: 'children',
+            header: '# of Kids',
+            //size: 150,
+        },
+        {
+            accessorKey: 'totalGuests',
+            header: 'Total Guests',
+            //size: 150,
+        },
+        {
+            accessorKey: 'pets',
+            header: 'Pets Allowed',
+            //size: 150,
+            Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
+        },
+        {
+            accessorKey: 'totalAmount',
+            header: 'Total Amount',
+            //size: 150,
+        },
+        {
+            accessorKey: 'amountPaid',
+            header: 'Amount Paid',
+            //size: 150,
+        },
+        {
+            accessorKey: 'arrivalStatus',
+            header: 'Arrival Status',
+            //size: 150,
+        },
+        {
+            accessorKey: 'paymentStatus',
+            header: 'Payment Status',
+            //size: 150,
+            Cell: ({ row }) => {
+                const totalAmount = row.original.totalAmount;
+                const amountPaid = row.original.amountPaid;
+
+                if (amountPaid === 0) {
+                    return 'No Payment';
+                } else if (amountPaid > 0 && amountPaid < totalAmount) {
+                    return 'Partially Paid';
+                } else if (amountPaid === totalAmount) {
+                    return 'Fully Paid';
+                } else {
+                    return 'Unknown Status';
+                }
+            },
+        },
+        {
+            accessorKey: 'notes',
+            header: 'Notes',
+            //size: 150,
+        },
+    ], []);
+
+    return (
+        <div className="table-container">
+            <MantineReactTable
+                columns={columns}
+                data={remapped}
+                enablePagination={false}
+                enableRowActions={false}
+                positionActionsColumn='first'
+            />
+        </div>
+    );
+}
+
+export function TodayReservationTableCreator(props: {reservations: reservationResponseData[]}) {
+
+    const remapped = props.reservations.filter((reservation: reservationResponseData) => {
+        return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
+        }).map( (reservation: reservationResponseData) => {
+            return {
+                reservationRefNum: reservation.referenceNo,
+                checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
+                checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
+                adults: reservation.numberOfAdults,
+                children: reservation.numberOfChildren,
+                totalGuests: reservation.numberOfGuests,
+                pets: reservation.pets,
+                clientId: reservation.clientId,
+                roomId: reservation.roomId,
+                notes: reservation.adminNotes,
+                totalAmount: reservation.totalAmount,
+                amountPaid: reservation.amountPaid,
+                arrivalStatus: reservation.arrivalStatus
+            }
+    })
+    console.log(remapped)
+    // Memorize the columns
     const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
         {
             accessorKey: 'reservationRefNum',
