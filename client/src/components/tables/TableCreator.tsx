@@ -1,9 +1,8 @@
 import './table.css';
 import { useMemo } from "react";
 import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
-import { Box, Tabs } from "@mantine/core";
 
-// Sample Data for Reservations
+/*Sample Data for Reservations
 const sampleData = [
     {
         reservationRefNum: "ABC123",
@@ -91,7 +90,7 @@ const sampleData = [
         arrivalStatus: "Pending",
     },
     // More sample reservations can be added here
-];
+];*/
 
 export interface reservationResponseData {
     referenceNo?: string;
