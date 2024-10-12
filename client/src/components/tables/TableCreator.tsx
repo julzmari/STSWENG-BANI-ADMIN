@@ -1,96 +1,7 @@
 import './table.css';
 import { useMemo } from "react";
-import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
-
-/*Sample Data for Reservations
-const sampleData = [
-    {
-        reservationRefNum: "ABC123",
-        checkInDate: "2024-10-10",
-        checkOutDate: "2024-10-15",
-        adults: 2,
-        children: 1,
-        totalGuests: 3,
-        pets: true,
-        clientId: "C001",
-        roomId: "Room 10",
-        notes: "High floor requested",
-        totalAmount: 6000,
-        amountPaid: 6000,
-        arrivalStatus: "Checked Out",
-    },{
-        reservationRefNum: "123123",
-        checkInDate: "2024-10-10",
-        checkOutDate: "2024-10-12",
-        adults: 2,
-        children: 1,
-        totalGuests: 3,
-        pets: true,
-        clientId: "C003",
-        roomId: "Room 5",
-        notes: "",
-        totalAmount: 7000,
-        amountPaid: 5000,
-        arrivalStatus: "Checked In",
-    },{
-        reservationRefNum: "ABC124",
-        checkInDate: "2024-10-11",
-        checkOutDate: "2024-10-12",
-        adults: 2,
-        children: 2,
-        totalGuests: 4,
-        pets: false,
-        clientId: "C004",
-        roomId: "Room 3",
-        notes: "More pillows requested",
-        totalAmount: 4500,
-        amountPaid: 3000,
-        arrivalStatus: "Pending",
-    },{
-        reservationRefNum: "ABC125",
-        checkInDate: "2024-11-10",
-        checkOutDate: "2024-11-12",
-        adults: 6,
-        children: 0,
-        totalGuests: 6,
-        pets: true,
-        clientId: "C005",
-        roomId: "Room 1",
-        notes: "",
-        totalAmount: 10000,
-        amountPaid: 4500,
-        arrivalStatus: "Pending",
-    },{
-        reservationRefNum: "ABC126",
-        checkInDate: "2024-10-3",
-        checkOutDate: "2024-10-5",
-        adults: 6,
-        children: 0,
-        totalGuests: 6,
-        pets: true,
-        clientId: "C010",
-        roomId: "Room 9",
-        notes: "",
-        totalAmount: 10000,
-        amountPaid: 10000,
-        arrivalStatus: "Checked-In",
-    },{
-        reservationRefNum: "ABC127",
-        checkInDate: "2024-10-4",
-        checkOutDate: "2024-10-12",
-        adults: 6,
-        children: 0,
-        totalGuests: 6,
-        pets: true,
-        clientId: "C015",
-        roomId: "Room 8",
-        notes: "",
-        totalAmount: 10000,
-        amountPaid: 1000,
-        arrivalStatus: "Pending",
-    },
-    // More sample reservations can be added here
-];*/
+import { MantineReactTable, MRT_ColumnDef, useMantineReactTable } from "mantine-react-table";
+import { ActionModal } from '../modals/ActionModal';
 
 export interface reservationResponseData {
     referenceNo?: string;
@@ -108,10 +19,23 @@ export interface reservationResponseData {
     arrivalStatus?: string;
 }
 
-export function ReservationTableCreator(props: {reservations: reservationResponseData[]}) {
-    const remapped = props.reservations.map( (reservation: reservationResponseData) => {
+export function ReservationTableCreator(props: {reservations: reservationResponseData[], page: string}) {
+
+    let reservations = []
+
+    if (props.page === 'today')
+    {   
+        reservations = props.reservations.filter((reservation: reservationResponseData) => {
+            return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
+        }) 
+
+    } else {
+        reservations = props.reservations
+    }
+
+    const remappedData = reservations.map( (reservation: reservationResponseData) => {
         return {
-            reservationRefNum: reservation.referenceNo,
+            referenceNo: reservation.referenceNo,
             checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
             checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
             adults: reservation.numberOfAdults,
@@ -130,7 +54,7 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
     // Memorize the columns
     const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
         {
-            accessorKey: 'reservationRefNum',
+            accessorKey: 'referenceNo',
             header: 'Reservation Ref No.',
             //size: 200,
         }, 
@@ -211,26 +135,37 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
         },
     ], []);
 
+    const table = useMantineReactTable({
+        columns: columns,
+        data: remappedData ?? [],
+        enablePagination: false,
+        enableRowActions: true,
+        enableRowVirtualization: true,
+        state: {showSkeletons: !remappedData},
+        positionActionsColumn: 'first',
+
+        renderRowActions: ({row}) => (
+            <ActionModal reservation={remappedData[row.index]} />
+        )
+    })
+
     return (
         <div className="table-container">
             <MantineReactTable
-                columns={columns}
-                data={remapped}
-                enablePagination={false}
-                enableRowActions={false}
-                positionActionsColumn='first'
+                table={table}
             />
         </div>
     );
 }
 
+/*
 export function TodayReservationTableCreator(props: {reservations: reservationResponseData[]}) {
 
-    const remapped = props.reservations.filter((reservation: reservationResponseData) => {
+    const remappedData = props.reservations.filter((reservation: reservationResponseData) => {
         return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
         }).map( (reservation: reservationResponseData) => {
             return {
-                reservationRefNum: reservation.referenceNo,
+                referenceNo: reservation.referenceNo,
                 checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
                 checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
                 adults: reservation.numberOfAdults,
@@ -245,11 +180,11 @@ export function TodayReservationTableCreator(props: {reservations: reservationRe
                 arrivalStatus: reservation.arrivalStatus
             }
     })
-    console.log(remapped)
+    console.log(remappedData)
     // Memorize the columns
     const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
         {
-            accessorKey: 'reservationRefNum',
+            accessorKey: 'referenceNo',
             header: 'Reservation Ref No.',
             //size: 200,
         }, 
@@ -334,11 +269,12 @@ export function TodayReservationTableCreator(props: {reservations: reservationRe
         <div className="table-container">
             <MantineReactTable
                 columns={columns}
-                data={remapped}
+                data={remappedData}
                 enablePagination={false}
-                enableRowActions={false}
+                enableRowActions={true}
                 positionActionsColumn='first'
             />
         </div>
     );
 }
+*/
