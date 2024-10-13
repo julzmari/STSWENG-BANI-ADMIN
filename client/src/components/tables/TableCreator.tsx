@@ -14,6 +14,7 @@ export interface reservationResponseData {
     clientId?: string;
     roomId?: string;
     adminNotes?: string;
+    otherNotes?: string;
     totalAmount?: number;
     amountPaid?: number;
     arrivalStatus?: string;
@@ -55,7 +56,8 @@ function createTable(reservations: reservationResponseData[]) {
             pets: reservation.pets,
             clientId: reservation.clientId,
             roomId: reservation.roomId,
-            notes: reservation.adminNotes,
+            adminNotes: reservation.adminNotes,
+            otherNotes: reservation.otherNotes,
             totalAmount: reservation.totalAmount,
             amountPaid: reservation.amountPaid,
             arrivalStatus: reservation.arrivalStatus
@@ -128,8 +130,12 @@ function createTable(reservations: reservationResponseData[]) {
             },
         },
         {
-            accessorKey: 'notes',
-            header: 'Notes',
+            accessorKey: 'otherNotes',
+            header: 'Client Notes',
+        },
+        {
+            accessorKey: 'adminNotes',
+            header: 'Admin Notes',
         },
     ], []);
 
