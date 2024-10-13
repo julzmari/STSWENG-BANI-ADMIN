@@ -14,6 +14,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 import { Root } from './pages/Root';
 import { AllReservations } from './pages/AllReservations';
+import { PastReservations } from './pages/PastReservations';
 
 //login is export def so no { } lmrc
 import Login from './pages/Login';
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         {
           path: '/login',
           element: <Login /> // public
+        },
+        {
+          path: '/pastreservations',
+          element: <ProtectedRoute><PastReservations /></ProtectedRoute> 
         }
       ]
     },
