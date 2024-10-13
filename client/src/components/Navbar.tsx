@@ -1,11 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Group } from '@mantine/core';
 import classes from './Navbar.module.css';
 import { Image } from '@mantine/core';
-
-//lmrc
-import { useNavigate } from 'react-router-dom';
-//lmrc
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
 
 const links = [
   { link: '/', label: 'Dashboard' },
@@ -15,18 +12,15 @@ const links = [
 ];
 
 export function Navbar() {
+  const location = useLocation(); // Get current location
+  const [active, setActive] = useState(location.pathname); // Initialize active state
 
-  const [active, setActive] = useState(links[0].link);
-
-  //lmrc
   const navigate = useNavigate(); // Hook for navigation
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     navigate('/login');
   };
-  //lmrc
-
 
   const items = links.map((link) => (
     <a
@@ -36,12 +30,11 @@ export function Navbar() {
       data-active={active === link.link || undefined}
       onClick={(event) => {
         event.preventDefault();
-        // replacing - setActive(link.link); lmrc
         if (link.link === '/logout') {
           handleLogout(); 
         } else {
           setActive(link.link);
-          navigate(link.link);  // Use navigate to switch pages lmrc
+          navigate(link.link);
         }
       }}
     >
@@ -49,14 +42,18 @@ export function Navbar() {
     </a>
   ));
 
+  useEffect(() => {
+    // Update the active link whenever the location changes
+    setActive(location.pathname);
+  }, [location.pathname]);
+
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
-        <Image src={'./images/navbar-logo.png'} h={'70'}/>
+        <Image src={'./images/navbar-logo.png'} h={'70'} />
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>
-
       </Container>
     </header>
   );
