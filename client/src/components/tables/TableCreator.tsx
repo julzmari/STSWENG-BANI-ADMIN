@@ -19,21 +19,32 @@ export interface reservationResponseData {
     arrivalStatus?: string;
 }
 
-export function ReservationTableCreator(props: {reservations: reservationResponseData[], page: string}) {
-
+export function ReservationTableCreator(props: { reservations: reservationResponseData[], page: string }) {
     let reservations = []
 
-    if (props.page === 'today')
-    {   
+    if (props.page === 'today') {   
         reservations = props.reservations.filter((reservation: reservationResponseData) => {
             return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
         }) 
-
     } else {
-        reservations = props.reservations
+        reservations = props.reservations;
     }
 
-    const remappedData = reservations.map( (reservation: reservationResponseData) => {
+    return createTable(reservations);
+}
+
+// New function for past reservations
+export function PastReservationTableCreator(props: { reservations: reservationResponseData[] }) {
+    const reservations = props.reservations.filter((reservation: reservationResponseData) => {
+        return new Date(reservation.checkOutDate ?? '') < new Date(); // Filter for past reservations
+    });
+
+    return createTable(reservations);
+}
+
+// Helper function to create a table
+function createTable(reservations: reservationResponseData[]) {
+    const remappedData = reservations.map((reservation: reservationResponseData) => {
         return {
             referenceNo: reservation.referenceNo,
             checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
@@ -49,70 +60,58 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
             amountPaid: reservation.amountPaid,
             arrivalStatus: reservation.arrivalStatus
         }
-    })
+    });
 
     // Memorize the columns
     const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
         {
             accessorKey: 'referenceNo',
             header: 'Reservation Ref No.',
-            //size: 200,
         }, 
         {
             accessorKey: 'roomId',
             header: 'Room ID',
-            //size: 200,
         },
         {
             accessorKey: 'checkInDate',
             header: 'Check-in Date',
-            //size: 200,
         },
         {
             accessorKey: 'checkOutDate',
             header: 'Check-out Date',
-            //size: 200,
         },
         {
             accessorKey: 'adults',
             header: '# of Adults',
-            //size: 150,
         },
         {
             accessorKey: 'children',
             header: '# of Kids',
-            //size: 150,
         },
         {
             accessorKey: 'totalGuests',
             header: 'Total Guests',
-            //size: 150,
         },
         {
             accessorKey: 'pets',
             header: 'Pets Allowed',
-            //size: 150,
             Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
         },
         {
             accessorKey: 'totalAmount',
             header: 'Total Amount',
-            //size: 150,
         },
         {
             accessorKey: 'amountPaid',
             header: 'Amount Paid',
-            //size: 150,
         },
         {
             accessorKey: 'arrivalStatus',
             header: 'Arrival Status',
-            //size: 150,
         },
         {
             accessorKey: 'paymentStatus',
             header: 'Payment Status',
-            //size: 150,
             Cell: ({ row }) => {
                 const totalAmount = row.original.totalAmount;
                 const amountPaid = row.original.amountPaid;
@@ -131,7 +130,6 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
         {
             accessorKey: 'notes',
             header: 'Notes',
-            //size: 150,
         },
     ], []);
 
@@ -141,13 +139,12 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
         enablePagination: false,
         enableRowActions: true,
         enableRowVirtualization: true,
-        state: {showSkeletons: !remappedData},
+        state: { showSkeletons: !remappedData },
         positionActionsColumn: 'first',
-
-        renderRowActions: ({row}) => (
+        renderRowActions: ({ row }) => (
             <ActionModal reservation={remappedData[row.index]} />
         )
-    })
+    });
 
     return (
         <div className="table-container">
@@ -157,6 +154,7 @@ export function ReservationTableCreator(props: {reservations: reservationRespons
         </div>
     );
 }
+
 
 /*
 export function TodayReservationTableCreator(props: {reservations: reservationResponseData[]}) {

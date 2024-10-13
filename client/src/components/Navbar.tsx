@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const links = [
   { link: '/', label: 'Dashboard' },
-  { link: '/allreservations', label: 'Reservation History' },
+  { link: '/pastreservations', label: 'Reservation History' },
   { link: '/rooms', label: 'Rooms' },
   { link: '/logout', label: 'Log Out' },
 ];
