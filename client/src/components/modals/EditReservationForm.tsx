@@ -10,6 +10,7 @@ export function EditReservationEntry({reservationEntry} : {reservationEntry: res
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
+        referenceNo: reservationEntry.referenceNo,
         totalAmount: reservationEntry.totalAmount,
         amountPaid: reservationEntry.amountPaid,
         arrivalStatus: reservationEntry.arrivalStatus,

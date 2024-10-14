@@ -1,5 +1,5 @@
 import { Box, Tabs } from "@mantine/core";
-import { ReservationTableCreator, TodayReservationTableCreator, reservationResponseData } from "../components/tables/TableCreator.tsx";
+import { ReservationTableCreator, reservationResponseData } from "../components/tables/TableCreator.tsx";
 import { useEffect, useState } from 'react';
 
 export function AllReservations() {
