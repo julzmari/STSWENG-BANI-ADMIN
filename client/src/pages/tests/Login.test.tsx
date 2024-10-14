@@ -30,7 +30,14 @@ test('renders login form', () => {
   render(<Login />); 
 
   // check if the username and password input fields + login button are present
-  // TODO
+  const usernameInput = screen.getByLabelText(/Username/i);
+  const passwordInput = screen.getByLabelText(/Password/i);
+  const loginButton = screen.getByRole('button', { name: /Login/i });
+
+  // Assert that the elements are found
+  expect(usernameInput).not.toBeNull();
+  expect(passwordInput).not.toBeNull();
+  expect(loginButton).not.toBeNull();
 });
 
 test('handles successful login', async () => {
@@ -41,7 +48,7 @@ test('handles successful login', async () => {
   //simulate typing values
   fireEvent.change(screen.getByPlaceholderText('Username'), { target: { value: 'admin' } });
   fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'password' } });
-  fireEvent.click(screen.getByRole('button', { name: /login/i }));
+  fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
   expect(fetchMock).toHaveBeenCalledWith('/api/login', expect.anything());
   expect(localStorage.getItem('authToken')).toBe('mockToken');

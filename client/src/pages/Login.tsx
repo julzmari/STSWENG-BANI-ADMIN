@@ -89,6 +89,7 @@ const Login: React.FC = () => {
 
           <button
             type="submit"
+            role="login"
             className="w-full bg-sky-950 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             Login
