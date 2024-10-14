@@ -1,16 +1,17 @@
-import { Button, Group, NativeSelect, NumberInput, Textarea } from '@mantine/core';
+import { Alert, Button, Group, NativeSelect, NumberInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { reservationResponseData } from '../tables/TableCreator';
 import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
 
 export function EditReservationEntry({reservationEntry} : {reservationEntry: reservationResponseData}) {
 
     //const [loading, { open, close }] = useDisclosure();
+    const [isUpdated, setIsUpdated] = useState<string>('')
 
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-        referenceNo: reservationEntry.referenceNo,
         totalAmount: reservationEntry.totalAmount,
         amountPaid: reservationEntry.amountPaid,
         arrivalStatus: reservationEntry.arrivalStatus,
@@ -18,19 +19,52 @@ export function EditReservationEntry({reservationEntry} : {reservationEntry: res
         },
     });
 
+    const handleSubmit = async () => {
 
-    const handleSubmit = () => {
-        //open()
-
+       // open();
+    
         try {
+
+            const paymentStatus = (form.getValues().amountPaid === form.getValues().totalAmount) && (form.getValues().amountPaid != 0) 
+                                    ? 'Fully Paid' 
+                                    : (form.getValues().amountPaid > form.getValues().totalAmount)
+                                    ? 'Overpaid'
+                                    : (form.getValues().amountPaid < form.getValues().totalAmount) && (form.getValues().amountPaid !== 0)
+                                    ? 'Partially Paid'
+                                    : 'No Payment'
+
+            console.log(paymentStatus)
             console.log(form.getValues())
+             const response = await fetch(`/api/update-reservation/${reservationEntry.referenceNo}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    totalAmount: form.getValues().totalAmount,
+                    amountPaid: form.getValues().amountPaid,
+                    paymentStatus: paymentStatus,
+                    arrivalStatus: form.getValues().arrivalStatus,
+                    adminNotes: form.getValues().adminNotes,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to update reservation');
+            } 
+    
+            const updatedData = await response.json();
+            //console.log('Reservation updated successfully:', updatedData);
+            setIsUpdated('success')
+
         } catch (error) {
-            console.error(error)
+            console.error('Error updating reservation:', error);
+            setIsUpdated('failed')
+        } finally {
+            //close();
         }
 
-       // close()
-    }
-
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -64,6 +98,21 @@ export function EditReservationEntry({reservationEntry} : {reservationEntry: res
                 key={form.key('adminNotes')}
                 {...form.getInputProps('adminNotes')}
             />
+
+            {isUpdated === 'success' ? 
+                <Alert 
+                    variant="light" 
+                    color="green" 
+                    title="Update Successful" 
+                >
+                </Alert> : isUpdated === 'failed' ?
+                <Alert 
+                variant="light" 
+                color="red" 
+                title="Update Unsuccessful" 
+                >
+                </Alert> : <></>
+            }
 
 
             <Group justify="flex-end" mt="md">

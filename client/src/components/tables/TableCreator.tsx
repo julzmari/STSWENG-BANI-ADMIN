@@ -17,6 +17,7 @@ export interface reservationResponseData {
     otherNotes?: string;
     totalAmount?: number;
     amountPaid?: number;
+    paymentStatus?: string;
     arrivalStatus?: string;
 }
 
