@@ -29,31 +29,33 @@ app.get ('/api/get-reservations', async function (req, res){
 })
 
 //update target reservation from database
-app.post ('/api/update-reservation', async function (req,res){
+app.patch('/api/update-reservation/:referenceNo', async function (req,res){
 
     try{
-        const {referenceNo,totalAmount,amountPaid,arrivalStatus,adminNotes} = req.query
+        const body = req.body
+        const referenceNo = req.params.referenceNo
 
-        const filter = {referenceNo: req.query.referenceNo};
+        const filter = {referenceNo: referenceNo}
 
         const updatedData = {
 
-            $set:{
-                totalAmount: req.query.totalAmount,
-                amountPaid: req.query.amountPaid,
-                arrivalStatus: req.query.arrivalStatus,
-                adminNotes: req.query.adminNotes,
-            }
-
-        }
+            
+                totalAmount: body.totalAmount,
+                amountPaid: body.amountPaid,
+                paymentStatus: body.paymentStatus,
+                arrivalStatus: body.arrivalStatus,
+                adminNotes: body.adminNotes,
         
-        const reservationData = await Reservation.updateOne(filter,updatedData);
+        }
+
+        await Reservation.updateOne(filter, updatedData);
+
+        res.status(200).json({ message: "Reservation details updated successfully" })
     }
     catch (error){
         console.error("An error occured when updating a reservation:\n", error);
         res.status(500).send("Internal Server Error");
     }
-
 })
 
 module.exports = {app, PORT}
