@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Client, Room, Reservation } = require('./models/models.js')
+//const { Client, Room, Reservation } = require('./models/models.js')
+const reservation = require("./routes/reservation.js")
 
 const app = express()
 const PORT = 3000
@@ -9,8 +10,10 @@ app.use(express.static("public"));
 app.use(express.json())
 app.use(bodyParser.json());
 
+app.use("/api", reservation)
+
 //gets reservations from the database and brings them to the reservationData page
-app.get ('/api/get-reservations', async function (req, res){
+/*app.get ('/api/get-reservations', async function (req, res){
 
     try{
 
@@ -26,10 +29,10 @@ app.get ('/api/get-reservations', async function (req, res){
         res.status(500).send("Internal Server Error");
     }
 
-})
+})*/
 
 //update target reservation from database
-app.patch('/api/update-reservation/:referenceNo', async function (req,res){
+/*app.patch('/api/update-reservation/:referenceNo', async function (req,res){
 
     try{
         const body = req.body
@@ -45,7 +48,7 @@ app.patch('/api/update-reservation/:referenceNo', async function (req,res){
                 paymentStatus: body.paymentStatus,
                 arrivalStatus: body.arrivalStatus,
                 adminNotes: body.adminNotes,
-        
+    
         }
 
         await Reservation.updateOne(filter, updatedData);
@@ -56,7 +59,7 @@ app.patch('/api/update-reservation/:referenceNo', async function (req,res){
         console.error("An error occured when updating a reservation:\n", error);
         res.status(500).send("Internal Server Error");
     }
-})
+})*/
 
 module.exports = {app, PORT}
 

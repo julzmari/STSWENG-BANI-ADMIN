@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {updateReservation} = require('../controllers/reservation.js')
+const {getReservations, updateReservation} = require('../controllers/reservation.js')
 
-router.patch("/:id", updateReservation)
+router.get("/get-reservations", getReservations)
+router.patch("/update-reservation/:referenceNo", updateReservation)
 
 module.exports = router
