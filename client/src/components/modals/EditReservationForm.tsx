@@ -85,7 +85,7 @@ export function EditReservationEntry({reservationEntry} : {reservationEntry: res
                 {...form.getInputProps('arrivalStatus')}
                 //value={reservationEntry.arrivalStatus}
                 //onChange={(event) => setValue(event.currentTarget.value)}
-                data={['Booked', 'Checked-in', 'Checked-out', 'New  Reservation']}
+                data={["Booked", "Checked-in", "Checked-out", "New Reservation", "Cancelled"]}
             />
 
             <Textarea

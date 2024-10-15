@@ -53,8 +53,9 @@ export function PastReservationTableCreator(props: { reservations: reservationRe
         // Filter for past reservations where the arrival status is "Checked-out"
         //const isPastReservation = new Date(reservation.checkOutDate ?? '') < new Date();
         const isCheckedOut = reservation.arrivalStatus === "Checked-out";
+        const isCancelled = reservation.arrivalStatus === "Cancelled";
         //return isPastReservation && isCheckedOut;
-        return isCheckedOut;
+        return isCheckedOut && isCancelled;
     });
 
     return createPastReservationTable(reservations);
