@@ -45,14 +45,14 @@ test('renders login form', () => {
   expect(loginButton).not.toBeNull();
 });
 
-test('handles successful login', async () => {
+test('handles login submission', async () => {
   fetchMock.mockResponseOnce(JSON.stringify({ token: 'mockToken' }));
 
   render(<Login />); 
 
   //simulate typing values
-  fireEvent.change(screen.getByPlaceholderText('Enter your username'), { target: { value: 'Leomarc' } });
-  fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'happyhappy' } });
+  fireEvent.change(screen.getByPlaceholderText('Enter your username'), { target: { value: 'test' } });
+  fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'haptest' } });
   fireEvent.submit(screen.getByTestId('login-form'));
 
 
