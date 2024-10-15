@@ -1,7 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react'; 
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'; 
 import Login from '../Login';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import fetchMock from 'jest-fetch-mock'; 
+fetchMock.enableMocks();
+
+//node env
+global.window = {} as any;
 
 const localStorageMock = (() => {
   let store: Record<string, string> = {}; 
@@ -46,13 +51,15 @@ test('handles successful login', async () => {
   render(<Login />); 
 
   //simulate typing values
-  fireEvent.change(screen.getByPlaceholderText('Username'), { target: { value: 'admin' } });
-  fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'password' } });
-  fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+  fireEvent.change(screen.getByPlaceholderText('Enter your username'), { target: { value: 'Leomarc' } });
+  fireEvent.change(screen.getByPlaceholderText('Enter your password'), { target: { value: 'happyhappy' } });
+  fireEvent.submit(screen.getByTestId('login-form'));
 
-  expect(fetchMock).toHaveBeenCalledWith('/api/login', expect.anything());
-  expect(localStorage.getItem('authToken')).toBe('mockToken');
 
-  //check if it redirects to the main page
-  expect(window.location.href).toBe('/');
+  //5 seconds timer: With('http://localhost:3000/api/login', expect.anything()), { timeout: 5000 })
+  await waitFor(() => expect(fetchMock).toHaveBeenCalledWith('http://localhost:3000/api/login', expect.anything()), { timeout: 5000 });
+  await waitFor(() => expect(localStorage.getItem('authToken')).toBe('mockToken'));
+
+  // check if redirects to main page
+  await waitFor(() => expect(window.location.href).toBe('http://localhost/'));
 });
