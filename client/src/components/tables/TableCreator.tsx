@@ -3,6 +3,15 @@ import { useMemo } from "react";
 import { MantineReactTable, MRT_ColumnDef, useMantineReactTable } from "mantine-react-table";
 import { ActionModal } from '../modals/ActionModal';
 
+export interface ClientData {
+    clientId: string;
+    firstName: string;
+    lastName: string;
+    contactNumber: string;
+    email: string;
+    address?: string;
+}
+
 export interface reservationResponseData {
     referenceNo?: string;
     checkInDate?: string;
@@ -19,7 +28,10 @@ export interface reservationResponseData {
     amountPaid?: number;
     paymentStatus?: string;
     arrivalStatus?: string;
+    client?: ClientData;
 }
+
+
 
 export function ReservationTableCreator(props: { reservations: reservationResponseData[], page: string }) {
     let reservations = []
@@ -65,7 +77,8 @@ function createTable(reservations: reservationResponseData[]) {
             otherNotes: reservation.otherNotes,
             totalAmount: reservation.totalAmount,
             amountPaid: reservation.amountPaid,
-            arrivalStatus: reservation.arrivalStatus
+            arrivalStatus: reservation.arrivalStatus,
+            client: reservation.client
         }
     });
 
@@ -105,6 +118,21 @@ function createTable(reservations: reservationResponseData[]) {
                     return 'Unknown Status';
                 }
             },
+        },
+        {
+            accessorFn: (row) => row.client?.firstName, // Use optional chaining
+            id: 'firstName',
+            header: 'First Name',
+        },
+        {
+            accessorFn: (row) => row.client?.lastName, // Use optional chaining
+            id: 'lastName',
+            header: 'Last Name',
+        },
+        {
+            accessorFn: (row) => row.client?.contactNumber, // Use optional chaining
+            id: 'contactNumber',
+            header: 'Contact Number',
         },
         {
             accessorKey: 'otherNotes',
@@ -196,11 +224,11 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
         {
             accessorKey: 'adminNotes',
             header: 'Admin Notes',
-        },
+        },      
         {
             accessorKey: 'arrivalStatus',
             header: 'Status',
-        },
+        }, 
         {
             accessorKey: 'totalAmount',
             header: 'Total Amount',
@@ -209,6 +237,7 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             accessorKey: 'amountPaid',
             header: 'Amount Paid',
         },
+        
         {
             accessorKey: 'paymentStatus',
             header: 'Payment Status',
@@ -226,6 +255,21 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
                     return 'Unknown Status';
                 }
             },
+        },
+        {
+            accessorFn: (row) => row.client?.firstName, // Use optional chaining
+            id: 'firstName',
+            header: 'First Name',
+        },
+        {
+            accessorFn: (row) => row.client?.lastName, // Use optional chaining
+            id: 'lastName',
+            header: 'Last Name',
+        },
+        {
+            accessorFn: (row) => row.client?.contactNumber, // Use optional chaining
+            id: 'contactNumber',
+            header: 'Contact Number',
         },
         {
             accessorKey: 'otherNotes',
@@ -260,10 +304,12 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             header: 'Pets Allowed',
             Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
         },
+       
+        
         {
             accessorKey: 'referenceNo',
             header: 'Reservation Ref No.',
-        },
+        }, 
     ], []);
 
     const table = useMantineReactTable({

@@ -1,20 +1,33 @@
-const { Reservation } = require('../models/models.js')
+const { Reservation, Client } = require('../models/models.js')
 
 const getReservations = async (req, res) => {
+    try {
+        const reservations = await Reservation.find({}); // Fetch reservations
 
-    try{
+        // Manually populate client data
+        const populatedReservations = await Promise.all(reservations.map(async (reservation) => {
+            const client = await Client.findOne({ clientId: reservation.clientId }); // Find the client using clientId
+            return {
+                ...reservation._doc,
+                client: client ? { firstName: client.firstName, lastName: client.lastName, contactNumber: client.contactNumber } : null // Add client info to reservation
+            };
+        }));
 
-        const reservationData = await Reservation.find({});
-
-        console.log("Fetching Reservation Data");
-
-        return res.end(JSON.stringify(reservationData));
-    }
-    catch (error) {
-        //console.error("An error occured when retrieving reservations:\n", error);
+        return res.json(populatedReservations);
+    } catch (error) {
+        console.error("An error occurred when retrieving reservations:", error);
         res.status(500).send("Internal Server Error");
     }
 };
+
+
+
+
+
+
+
+
+
 
 const updateReservation = async (req, res) => {
 

@@ -134,7 +134,7 @@ const reservationSchema = new mongoose.Schema({
     },
     arrivalStatus: {
         type: String,
-        enum: ["Booked", "Checked-in", "Checked-out"],
+        enum: ["Booked", "Checked-in", "Checked-out", "New Reservations"],
         required: true
     },
     otherNotes: {
