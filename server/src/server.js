@@ -28,13 +28,13 @@ app.post('/api/login', async (req, res) => {
       // search by name
       const admin = await Admin.findOne({ username });
       if (!admin) {
-        return res.status(400).json({ message: 'Invalid username or password test-user' });
+        return res.status(400).json({ message: 'Invalid username or password' });
       }
   
       // check password
       const isMatch = await bcrypt.compare(password, admin.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid username or password test-password' });
+        return res.status(400).json({ message: 'Invalid username or password' });
       }
   
       // return success message + token
