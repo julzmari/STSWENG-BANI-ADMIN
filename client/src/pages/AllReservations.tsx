@@ -8,7 +8,7 @@ export function AllReservations() {
     const [initialized, setInitialized] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!initialized){
+       
             fetch('/api/get-reservations')
             .then(response => response.json())
             .then(data => {
@@ -16,8 +16,8 @@ export function AllReservations() {
                 setReservations(data); 
             })
             .then(() => setInitialized(true))
-        }
-    }, [reservations,initialized]);
+        
+    }, [reservations, initialized]);
 
     return (
         <Box  >
