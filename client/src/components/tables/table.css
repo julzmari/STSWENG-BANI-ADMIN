@@ -41,3 +41,9 @@ thead tr:nth-child(2) th > div > div {
     padding: 0; 
 }
 
+.table-container {
+    max-height: 75vh; 
+    overflow-y: auto;  
+    border-radius: 5px; 
+    background: #fff;
+}

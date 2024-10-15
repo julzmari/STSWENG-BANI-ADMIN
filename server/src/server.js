@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const { Client, Room, Admin } = require('./models/models.js')
 //const { Client, Room, Reservation, Admin } = require('./models/models.js')
 const reservation = require("./routes/reservation.js")
+const rooms = require("./routes/rooms.js")
 
 //add cors for comm between diff ports
 const cors = require('cors');
@@ -18,6 +19,8 @@ app.use(express.json())
 app.use(bodyParser.json());
 
 app.use("/api", reservation)
+app.use("/api", rooms)
+
 
 
 // for login validation
