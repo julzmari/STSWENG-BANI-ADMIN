@@ -1,0 +1,109 @@
+[
+    {
+        "roomId": "Room 1",
+        "floor": 1,
+        "bedType": "King",
+        "bedNum": 4,
+        "pax": 8,
+        "maxPax": 8,
+        "price": 9600.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 2",
+        "floor": 1,
+        "bedType": "King",
+        "bedNum": 4,
+        "pax": 8,
+        "maxPax": 8,
+        "price": 9600.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 3",
+        "floor": 1,
+        "bedType": "King",
+        "bedNum": 4,
+        "pax": 8,
+        "maxPax": 8,
+        "price": 9600.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 4",
+        "floor": 2,
+        "bedType": "King",
+        "bedNum": 1,
+        "pax": 2,
+        "maxPax": 4,
+        "price": 4200.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 5",
+        "floor": 2,
+        "bedType": "King",
+        "bedNum": 1,
+        "pax": 2,
+        "maxPax": 4,
+        "price": 4200.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 6",
+        "floor": 2,
+        "bedType": "King",
+        "bedNum": 1,
+        "pax": 2,
+        "maxPax": 4,
+        "price": 4200.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 7",
+        "floor": 2,
+        "bedType": "Queen",
+        "bedNum": 3,
+        "pax": 5,
+        "maxPax": 9,
+        "price": 10000.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 8",
+        "floor": 2,
+        "bedType": "Queen",
+        "bedNum": 3,
+        "pax": 6,
+        "maxPax": 8,
+        "price": 11000.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Room 9",
+        "floor": 1,
+        "bedType": "Queen",
+        "bedNum": 3,
+        "pax": 6,
+        "maxPax": 10,
+        "price": 13500.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Villa",
+        "floor": 1,
+        "bedType": "Queen",
+        "bedNum": 2,
+        "pax": 6,
+        "maxPax": 8,
+        "price": 15000.00,
+        "additionalPrice": 800.00
+    },
+    {
+        "roomId": "Hanging Kubo",
+        "floor": 1,
+        "pax": 5,
+        "maxPax": 5,
+        "price": 5000.00
+    }
+]
