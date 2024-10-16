@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - feature/*  # Trigger on feature branches
+      - main       # Trigger on the main branch
+  pull_request:
+    branches:
+      - integration  # Trigger on PR to the integration branch
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      # Unit test step
+      - name: Run unit tests
+        run: npm run test:unit  # Only runs unit tests
+
+  integration:
+    if: github.event_name == 'pull_request' && github.base_ref == 'integration'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      # Integration test step
+      - name: Run integration tests
+        run: npm run test:integration  # Only runs integration tests
