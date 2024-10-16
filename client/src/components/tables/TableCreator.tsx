@@ -96,12 +96,18 @@ function createTable(reservations: reservationResponseData[]) {
         {
             accessorKey: 'totalAmount',
             header: 'Total Amount',
+            hidden: true, 
         },
         {
             accessorKey: 'amountPaid',
             header: 'Amount Paid',
+            hidden: true, 
         },
-        
+        {
+            accessorFn: (row) => `${row.amountPaid} / ${row.totalAmount}`, 
+            id: 'paymentInfo',
+            header: 'Payment Info', 
+        },        
         {
             accessorKey: 'paymentStatus',
             header: 'Payment Status',
@@ -121,17 +127,12 @@ function createTable(reservations: reservationResponseData[]) {
             },
         },
         {
-            accessorFn: (row) => row.client?.firstName, // Use optional chaining
-            id: 'firstName',
-            header: 'First Name',
+            accessorFn: (row) => `${row.client?.firstName || ''} ${row.client?.lastName || ''}`, 
+            id: 'fullName', 
+            header: 'Client Name', 
         },
         {
-            accessorFn: (row) => row.client?.lastName, // Use optional chaining
-            id: 'lastName',
-            header: 'Last Name',
-        },
-        {
-            accessorFn: (row) => row.client?.contactNumber, // Use optional chaining
+            accessorFn: (row) => row.client?.contactNumber, 
             id: 'contactNumber',
             header: 'Contact Number',
         },
@@ -182,7 +183,13 @@ function createTable(reservations: reservationResponseData[]) {
         enablePagination: false,
         enableRowActions: true,
         enableRowVirtualization: true,
-        state: { showSkeletons: !remappedData },
+        state: { 
+            showSkeletons: !remappedData ,
+            columnVisibility: {
+                totalAmount: false, 
+                amountPaid: false,  
+            },
+        },
         positionActionsColumn: 'first',
         renderRowActions: ({ row }) => (
             <ActionModal reservation={remappedData[row.index]} />
@@ -233,12 +240,18 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
         {
             accessorKey: 'totalAmount',
             header: 'Total Amount',
+            hidden: true, 
         },
         {
             accessorKey: 'amountPaid',
             header: 'Amount Paid',
+            hidden: true, 
         },
-        
+        {
+            accessorFn: (row) => `${row.amountPaid} / ${row.totalAmount}`, 
+            id: 'paymentInfo',
+            header: 'Payment Info', 
+        },        
         {
             accessorKey: 'paymentStatus',
             header: 'Payment Status',
@@ -258,17 +271,12 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             },
         },
         {
-            accessorFn: (row) => row.client?.firstName, // Use optional chaining
-            id: 'firstName',
-            header: 'First Name',
+            accessorFn: (row) => `${row.client?.firstName || ''} ${row.client?.lastName || ''}`, 
+            id: 'fullName', 
+            header: 'Client Name', 
         },
         {
-            accessorFn: (row) => row.client?.lastName, // Use optional chaining
-            id: 'lastName',
-            header: 'Last Name',
-        },
-        {
-            accessorFn: (row) => row.client?.contactNumber, // Use optional chaining
+            accessorFn: (row) => row.client?.contactNumber, 
             id: 'contactNumber',
             header: 'Contact Number',
         },
@@ -319,7 +327,13 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
         enablePagination: false,
         enableRowActions: false, // Disable row actions for past reservations
         enableRowVirtualization: true,
-        state: { showSkeletons: !remappedData },
+        state: { 
+            showSkeletons: !remappedData ,
+            columnVisibility: {
+                totalAmount: false, 
+                amountPaid: false,  
+            },
+        },
     });
 
     return (
