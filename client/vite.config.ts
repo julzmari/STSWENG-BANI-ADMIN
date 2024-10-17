@@ -12,6 +12,9 @@ export default defineConfig({
   },
   preview: {
     port: Number(process.env.PORT),
+    proxy: {
+      '/api':'https://bani-admin-api.onrender.com'
+    }
   },
   plugins: [react()]
 })
