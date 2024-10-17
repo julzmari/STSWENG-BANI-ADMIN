@@ -1,12 +1,12 @@
-import { Alert, Button, Group, NativeSelect, NumberInput, Textarea } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { Button, Group, NativeSelect, NumberInput, Textarea } from '@mantine/core';//Alert,
+import { useForm, UseFormReturnType } from '@mantine/form';
 import { reservationResponseData } from '../tables/TableCreator';
 
 function refreshPage(){ 
     window.location.reload(); 
 }
 
-const handleSubmit = async (form, reservationEntry) => {
+const handleSubmit = async (form: UseFormReturnType<{ totalAmount: number, amountPaid: number, arrivalStatus: string, adminNotes: string }>, reservationEntry: reservationResponseData) => {
 
     try {
         const paymentStatus = (form.getValues().amountPaid === form.getValues().totalAmount && form.getValues().amountPaid !== 0) 
@@ -49,10 +49,10 @@ export function EditReservationEntry({reservationEntry} : {reservationEntry: res
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-        totalAmount: reservationEntry.totalAmount,
-        amountPaid: reservationEntry.amountPaid,
-        arrivalStatus: reservationEntry.arrivalStatus,
-        adminNotes: reservationEntry.adminNotes,
+        totalAmount: reservationEntry.totalAmount ?? 0,
+        amountPaid: reservationEntry.amountPaid ?? 0,
+        arrivalStatus: reservationEntry.arrivalStatus ?? '',
+        adminNotes: reservationEntry.adminNotes ?? '',
         },
     });
 

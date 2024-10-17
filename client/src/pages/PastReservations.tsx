@@ -1,5 +1,5 @@
-import { Box, Tabs } from "@mantine/core";
-import { ReservationTableCreator, TodayReservationTableCreator, reservationResponseData, PastReservationTableCreator } from "../components/tables/TableCreator.tsx";
+import { Box } from "@mantine/core"; //  Tabs
+import { reservationResponseData, PastReservationTableCreator } from "../components/tables/TableCreator.tsx"; //ReservationTableCreator, TodayReservationTableCreator,
 import { useEffect, useState } from 'react';
 
 export function PastReservations() {
@@ -25,7 +25,7 @@ export function PastReservations() {
 
             <PastReservationTableCreator 
                 reservations={reservations} 
-                page={'past'}
+                //page={'past'}
             />
         </Box>
 

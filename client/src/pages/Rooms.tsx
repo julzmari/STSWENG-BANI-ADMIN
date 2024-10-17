@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export function Rooms() {
     const [rooms, setRooms] = useState<RoomData[]>([]);
-    const [initialized, setInitialized] = useState<boolean>(false);
+    //const [initialized, setInitialized] = useState<boolean>(false);
 
     useEffect(() => {
         fetch('/api/get-rooms')
@@ -13,7 +13,7 @@ export function Rooms() {
                 console.log("Data fetched from API:", data);
                 setRooms(data.data); // Set state with the correct data property
             })
-            .then(() => setInitialized(true))
+            //.then(() => setInitialized(true))
             .catch(error => console.error("Error fetching rooms:", error));
     }, []); // Updated dependency array to avoid multiple fetches
 
