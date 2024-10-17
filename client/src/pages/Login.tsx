@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     //console.log('Form is being submitted'); //test debug
     try {
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch('https://bani-admin-api.onrender.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
