@@ -44,7 +44,7 @@ export function ReservationTableCreator(props: { reservations: reservationRespon
         reservations = props.reservations;
     }
 
-    return createTable(reservations);
+    return CreateTable(reservations);
 }
 
 // New function for past reservations
@@ -55,16 +55,20 @@ export function PastReservationTableCreator(props: { reservations: reservationRe
         const isCheckedOut = reservation.arrivalStatus === "Checked-out";
         const isCancelled = reservation.arrivalStatus === "Cancelled";
         //return isPastReservation && isCheckedOut;
-        return isCheckedOut && isCancelled;
+        return isCheckedOut || isCancelled;
     });
 
-    return createPastReservationTable(reservations);
+    return CreatePastReservationTable(reservations);
 }
 
 // Helper function to create a table
-function createTable(reservations: reservationResponseData[]) {
+function CreateTable(reservations: reservationResponseData[]) {
     const remappedData = reservations.map((reservation: reservationResponseData) => {
         return {
+            firstName: reservation.client?.firstName,
+            lastName: reservation.client?.lastName,
+            contactNumber: reservation.client?.contactNumber,
+            otherNotes: reservation.otherNotes,
             referenceNo: reservation.referenceNo,
             checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
             checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
@@ -75,7 +79,6 @@ function createTable(reservations: reservationResponseData[]) {
             clientId: reservation.clientId,
             roomId: reservation.roomId,
             adminNotes: reservation.adminNotes,
-            otherNotes: reservation.otherNotes,
             totalAmount: reservation.totalAmount,
             amountPaid: reservation.amountPaid,
             arrivalStatus: reservation.arrivalStatus,
@@ -207,9 +210,11 @@ function createTable(reservations: reservationResponseData[]) {
 
 
 // Helper function to create the past reservations table
-function createPastReservationTable(reservations: reservationResponseData[]) {
+function CreatePastReservationTable(reservations: reservationResponseData[]) {
     const remappedData = reservations.map((reservation: reservationResponseData) => {
         return {
+            contactNumber: reservation.client?.contactNumber,
+            otherNotes: reservation.otherNotes,
             referenceNo: reservation.referenceNo,
             checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
             checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
@@ -220,11 +225,11 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             clientId: reservation.clientId,
             roomId: reservation.roomId,
             adminNotes: reservation.adminNotes,
-            otherNotes: reservation.otherNotes,
             totalAmount: reservation.totalAmount,
             amountPaid: reservation.amountPaid,
-            arrivalStatus: reservation.arrivalStatus
-        };
+            arrivalStatus: reservation.arrivalStatus,
+            client: reservation.client
+        }
     });
 
     // Memorize the columns
@@ -276,8 +281,7 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             header: 'Client Name', 
         },
         {
-            accessorFn: (row) => row.client?.contactNumber, 
-            id: 'contactNumber',
+            accessorKey: 'contactNumber',
             header: 'Contact Number',
         },
         {
@@ -313,8 +317,6 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
             header: 'Pets Allowed',
             Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
         },
-       
-        
         {
             accessorKey: 'referenceNo',
             header: 'Reservation Ref No.',
@@ -342,125 +344,3 @@ function createPastReservationTable(reservations: reservationResponseData[]) {
         </div>
     );
 }
-
-
-/*
-export function TodayReservationTableCreator(props: {reservations: reservationResponseData[]}) {
-
-    const remappedData = props.reservations.filter((reservation: reservationResponseData) => {
-        return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
-        }).map( (reservation: reservationResponseData) => {
-            return {
-                referenceNo: reservation.referenceNo,
-                checkInDate: (new Date(reservation.checkInDate ?? '')).toDateString(),
-                checkOutDate: (new Date(reservation.checkOutDate ?? '')).toDateString(),
-                adults: reservation.numberOfAdults,
-                children: reservation.numberOfChildren,
-                totalGuests: reservation.numberOfGuests,
-                pets: reservation.pets,
-                clientId: reservation.clientId,
-                roomId: reservation.roomId,
-                notes: reservation.adminNotes,
-                totalAmount: reservation.totalAmount,
-                amountPaid: reservation.amountPaid,
-                arrivalStatus: reservation.arrivalStatus
-            }
-    })
-    console.log(remappedData)
-    // Memorize the columns
-    const columns = useMemo<MRT_ColumnDef<any>[]>(() => [
-        {
-            accessorKey: 'referenceNo',
-            header: 'Reservation Ref No.',
-            //size: 200,
-        }, 
-        {
-            accessorKey: 'roomId',
-            header: 'Room ID',
-            //size: 200,
-        },
-        {
-            accessorKey: 'checkInDate',
-            header: 'Check-in Date',
-            //size: 200,
-        },
-        {
-            accessorKey: 'checkOutDate',
-            header: 'Check-out Date',
-            //size: 200,
-        },
-        {
-            accessorKey: 'adults',
-            header: '# of Adults',
-            //size: 150,
-        },
-        {
-            accessorKey: 'children',
-            header: '# of Kids',
-            //size: 150,
-        },
-        {
-            accessorKey: 'totalGuests',
-            header: 'Total Guests',
-            //size: 150,
-        },
-        {
-            accessorKey: 'pets',
-            header: 'Pets Allowed',
-            //size: 150,
-            Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No'),
-        },
-        {
-            accessorKey: 'totalAmount',
-            header: 'Total Amount',
-            //size: 150,
-        },
-        {
-            accessorKey: 'amountPaid',
-            header: 'Amount Paid',
-            //size: 150,
-        },
-        {
-            accessorKey: 'arrivalStatus',
-            header: 'Arrival Status',
-            //size: 150,
-        },
-        {
-            accessorKey: 'paymentStatus',
-            header: 'Payment Status',
-            //size: 150,
-            Cell: ({ row }) => {
-                const totalAmount = row.original.totalAmount;
-                const amountPaid = row.original.amountPaid;
-
-                if (amountPaid === 0) {
-                    return 'No Payment';
-                } else if (amountPaid > 0 && amountPaid < totalAmount) {
-                    return 'Partially Paid';
-                } else if (amountPaid === totalAmount) {
-                    return 'Fully Paid';
-                } else {
-                    return 'Unknown Status';
-                }
-            },
-        },
-        {
-            accessorKey: 'notes',
-            header: 'Notes',
-            //size: 150,
-        },
-    ], []);
-
-    return (
-        <div className="table-container">
-            <MantineReactTable
-                columns={columns}
-                data={remappedData}
-                enablePagination={false}
-                enableRowActions={true}
-                positionActionsColumn='first'
-            />
-        </div>
-    );
-}
-*/
