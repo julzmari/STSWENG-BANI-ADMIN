@@ -1,0 +1,50 @@
+[
+    {
+        "referenceNo": "R00000001",
+        "checkInDate": "2024-10-15T14:00:00Z",
+        "checkOutDate": "2024-10-20T12:00:00Z",
+        "numberOfAdults": 2,
+        "numberOfChildren": 2,
+        "numberOfGuests": 4,
+        "pets": false,
+        "clientId": "C00000001",
+        "roomId": "Room 1",
+        "otherNotes": "Late check-in requested.",
+        "adminNotes": "VIP client.",
+        "totalAmount": 1200.00,
+        "amountPaid": 1200.00,
+        "arrivalStatus": "Booked"
+    },
+    {
+        "referenceNo": "R00000002",
+        "checkInDate": "2024-10-22T14:00:00Z",
+        "checkOutDate": "2024-10-25T12:00:00Z",
+        "numberOfAdults": 3,
+        "numberOfChildren": 1,
+        "numberOfGuests": 4,
+        "pets": true,
+        "clientId": "C00000002",
+        "roomId": "Room 6",
+        "otherNotes": "Needs extra bedding.",
+        "adminNotes": "",
+        "totalAmount": 800.00,
+        "amountPaid": 400.00,
+        "arrivalStatus": "Booked"
+    },
+    {
+        "referenceNo": "R00000003",
+        "checkInDate": "2024-10-30T14:00:00Z",
+        "checkOutDate": "2024-11-05T12:00:00Z",
+        "numberOfAdults": 4,
+        "numberOfChildren": 3,
+        "numberOfGuests": 7,
+        "pets": false,
+        "clientId": "C00000003",
+        "roomId": "Villa",
+        "otherNotes": "Celebrating a birthday.",
+        "adminNotes": "Arrange for a cake.",
+        "totalAmount": 2500.00,
+        "amountPaid": 0.00,
+        "arrivalStatus": "Booked"
+    }
+]
