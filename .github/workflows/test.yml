@@ -23,4 +23,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm install
+      - run: npm install supertest --save-dev
       - run: npm run test
