@@ -23,5 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm install
-      - run: npm install supertest --save-dev
+
+      - name: Verify node_modules installation
+        run: ls -la node_modules
       - run: npm run test
