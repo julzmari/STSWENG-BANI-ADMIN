@@ -23,7 +23,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm install
-
-      - name: Verify node_modules installation
-        run: ls -la node_modules
+      - run: cd server && npm install
+      - run: ls -la server/node_modules
       - run: npm run test
