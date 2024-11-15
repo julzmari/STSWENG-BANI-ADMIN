@@ -16,7 +16,7 @@ const getRooms = async (req, res) => {
     }
 };
 
-const updateImageReservation = async (req, res) => {
+const updateImageRoom = async (req, res) => {
 
     try {
         console.log("Test")
@@ -40,4 +40,4 @@ const updateImageReservation = async (req, res) => {
     
 };
 
-module.exports = {getRooms, updateImageReservation}
+module.exports = {getRooms, updateImageRoom}

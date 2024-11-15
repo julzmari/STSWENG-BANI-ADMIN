@@ -48,4 +48,4 @@ const updateReservation = async (req, res) => {
     
 };
 
-module.exports = {getReservations, updateReservation, updateImageReservation}
+module.exports = {getReservations, updateReservation}

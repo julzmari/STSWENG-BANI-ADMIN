@@ -69,7 +69,7 @@ export function RoomTableCreator({ rooms }: RoomTableCreatorProps) {
         },
         positionActionsColumn: 'first',
         renderRowActions: ({ row }) => (
-            <ImgActionModal reservation={remappedData[row.index]} />
+            <ImgActionModal room={remappedData[row.index]} />
         )
     });
 

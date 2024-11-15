@@ -1,4 +1,4 @@
-import { Button, Group, FileInput } from '@mantine/core';
+import { Button, Group, FileInput } from '@mantine/core';//Alert,
 import { useForm, UseFormReturnType } from '@mantine/form';
 import { RoomData } from '../tables/RoomTableCreator';
 
@@ -7,19 +7,20 @@ function refreshPage(){
 }
 
 const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, roomEntry: RoomData) => {
-    console.log(roomEntry.roomId)
+    
     try {
 
-        const response = await fetch(`/api/update-image-reservation`, {
+        console.log(roomEntry.roomId) //test
+        const response = await fetch(`/api/updateimage-room`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                
             }),
         });
 
+        console.log(roomEntry.roomId) //test
         if (!response.ok) {
             throw new Error('Failed to update reservation');
         }
