@@ -6,8 +6,8 @@ function refreshPage(){
     window.location.reload(); 
 }
 
-const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, reservationEntry: RoomData) => {
-    console.log(reservationEntry.roomId)
+const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, roomEntry: RoomData) => {
+    console.log(roomEntry.roomId)
     try {
 
         const response = await fetch(`/api/update-image-reservation`, {
@@ -33,7 +33,7 @@ const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, reservatio
     }
 };
 
-export function EditGalleryForm({reservationEntry} : {reservationEntry: RoomData}) {
+export function EditGalleryForm({roomEntry} : {roomEntry: RoomData}) {
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -44,7 +44,7 @@ export function EditGalleryForm({reservationEntry} : {reservationEntry: RoomData
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        handleSubmit(form, reservationEntry);
+        handleSubmit(form, roomEntry);
     };
 
     return (
