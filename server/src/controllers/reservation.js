@@ -20,14 +20,29 @@ const getReservations = async (req, res) => {
     }
 };
 
+const updateImageReservation = async (req, res) => {
+    console.log("Test")
+    try {
 
+        const body = req.body
+        const referenceNo = req.params.referenceNo
 
+        // const filter = {referenceNo: referenceNo}
 
+        // const updatedData = {
+            
+        // }
 
+        // await Reservation.updateOne(filter, updatedData);
 
+        res.status(200).json({ message: "Reservation details updated successfully" })
 
-
-
+    } catch (error) {
+        //console.error(error)
+        res.status(500).json({ message: "Reservation details update failed" });
+    }
+    
+};
 
 const updateReservation = async (req, res) => {
 
@@ -57,4 +72,4 @@ const updateReservation = async (req, res) => {
     
 };
 
-module.exports = {getReservations, updateReservation}
+module.exports = {getReservations, updateReservation, updateImageReservation}
