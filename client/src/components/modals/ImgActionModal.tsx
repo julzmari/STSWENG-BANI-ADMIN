@@ -1,10 +1,10 @@
 import { ActionIcon, Modal } from "@mantine/core"
-import { reservationResponseData } from "../tables/TableCreator"
+import { RoomData } from "../tables/RoomTableCreator"
 import { useDisclosure } from "@mantine/hooks";
 import { MdEdit } from "react-icons/md";
 import { EditGalleryForm } from "./PhotoGalleryForm";
 
-export function ImgActionModal ({reservation} : {reservation: reservationResponseData}) {
+export function ImgActionModal ({reservation} : {reservation: RoomData}) {
 
     const [opened, { open, close }] = useDisclosure(false);
     

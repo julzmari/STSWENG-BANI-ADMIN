@@ -16,4 +16,28 @@ const getRooms = async (req, res) => {
     }
 };
 
-module.exports = {getRooms}
+const updateImageReservation = async (req, res) => {
+
+    try {
+        console.log("Test")
+        // const body = req.body
+        // const referenceNo = req.params.referenceNo
+
+        // const filter = {referenceNo: referenceNo}
+
+        // const updatedData = {
+            
+        // }
+
+        // await Reservation.updateOne(filter, updatedData);
+
+        res.status(200).json({ message: "Reservation details updated successfully" })
+
+    } catch (error) {
+        //console.error(error)
+        res.status(500).json({ message: "Reservation details update failed" });
+    }
+    
+};
+
+module.exports = {getRooms, updateImageReservation}

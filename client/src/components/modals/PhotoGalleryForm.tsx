@@ -1,16 +1,16 @@
-import { Button, Group, FileInput } from '@mantine/core';//Alert,
+import { Button, Group, FileInput } from '@mantine/core';
 import { useForm, UseFormReturnType } from '@mantine/form';
-import { reservationResponseData } from '../tables/TableCreator';
+import { RoomData } from '../tables/RoomTableCreator';
 
 function refreshPage(){ 
     window.location.reload(); 
 }
 
-const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, reservationEntry: reservationResponseData) => {
-
+const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, reservationEntry: RoomData) => {
+    console.log(reservationEntry.roomId)
     try {
 
-        const response = await fetch(`/api/update-image-reservation/${reservationEntry.referenceNo}`, {
+        const response = await fetch(`/api/update-image-reservation`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, reservatio
     }
 };
 
-export function EditGalleryForm({reservationEntry} : {reservationEntry: reservationResponseData}) {
+export function EditGalleryForm({reservationEntry} : {reservationEntry: RoomData}) {
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -52,13 +52,12 @@ export function EditGalleryForm({reservationEntry} : {reservationEntry: reservat
            
             <FileInput
             label="Upload Images To Add"
-            description="Select image/s"
+            description="Select image"
             placeholder="Image"
             accept="image/png,image/jpeg"
             key={form.key('roomImg')}
             {...form.getInputProps('roomImg')}
-            clearable
-            multiple/>
+            clearable/>
 
             <Group justify="flex-end" mt="md">
                 <Button type="submit">Submit</Button>
