@@ -1,6 +1,5 @@
 const { Room } = require('../models/models.js')
 
-
 const getRooms = async (req, res) => {
     try {
         const rooms = await Room.find({}); // Fetch rooms
@@ -16,18 +15,17 @@ const getRooms = async (req, res) => {
     }
 };
 
-const updateImageRoom = async (req, res) => {
+const updateImageRoom =  async (req, res) => {
 
     try {
-        console.log("Test")
-        // const body = req.body
-        // const referenceNo = req.params.referenceNo
+        console.log("Test \n" + req.roomImg)
+        const roomId = req.params.roomId
 
-        // const filter = {referenceNo: referenceNo}
+        const filter = {roomId: roomId}
 
-        // const updatedData = {
+        const updatedData = {
             
-        // }
+        }
 
         // await Reservation.updateOne(filter, updatedData);
 

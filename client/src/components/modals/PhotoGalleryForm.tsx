@@ -10,27 +10,30 @@ const handleSubmit = async (form: UseFormReturnType<{roomImg: any }>, roomEntry:
     
     try {
 
-        console.log(roomEntry.roomId) //test
-        const response = await fetch(`/api/updateimage-room`, {
+        const formData = new FormData();
+        formData.append('roomImg',form.getValues().roomImg)
+        
+        const response = await fetch(`/api/updateimage-room/${roomEntry.roomId}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
-            body: JSON.stringify({
-            }),
+            body: formData
         });
 
-        console.log(roomEntry.roomId) //test
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
         if (!response.ok) {
-            throw new Error('Failed to update reservation');
+            throw new Error('Failed to update room');
         }
 
         const updatedData = await response.json();
-        console.log('Reservation updated successfully:', updatedData);
-        refreshPage()
+        console.log('Room updated successfully:', updatedData);
+        // refreshPage()
 
     } catch (error) {
-        console.error('Error updating reservation:', error);
+        console.error('Error updating room:', error);
     }
 };
 
