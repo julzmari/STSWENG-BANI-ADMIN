@@ -9,6 +9,7 @@ export interface RoomData {
     bedType: string;
     maxPax: number;
     price: number;
+    images: string;
 }
 
 interface RoomTableCreatorProps {
@@ -24,6 +25,7 @@ export function RoomTableCreator({ rooms }: RoomTableCreatorProps) {
         bedType: room.bedType,
         maxPax: room.maxPax,
         price: room.price,
+        images: room.images,
     })) : [];
 
     const columns = useMemo<MRT_ColumnDef<RoomData>[]>(() => [
