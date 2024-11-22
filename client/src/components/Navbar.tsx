@@ -1,8 +1,7 @@
+import { Container, Group, Image } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { Container, Group } from '@mantine/core';
+import { useLocation, useNavigate } from 'react-router-dom';
 import classes from './Navbar.module.css';
-import { Image } from '@mantine/core';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
 
 const links = [
   { link: '/', label: 'Dashboard' },
@@ -14,13 +13,28 @@ const links = [
 export function Navbar() {
   const location = useLocation(); // Get current location
   const [active, setActive] = useState(location.pathname); // Initialize active state
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication
   const navigate = useNavigate(); // Hook for navigation
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
+    setIsAuthenticated(false);
     navigate('/login');
   };
+
+  useEffect(() => {
+    // Check if the authToken is present in localStorage
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      navigate('/login'); // Redirect to login if not authenticated
+    }
+
+    // Update the active link whenever the location changes
+    setActive(location.pathname);
+  }, [location.pathname]);
 
   const items = links.map((link) => (
     <a
@@ -42,18 +56,20 @@ export function Navbar() {
     </a>
   ));
 
-  useEffect(() => {
-    // Update the active link whenever the location changes
-    setActive(location.pathname);
-  }, [location.pathname]);
-
   return (
     <header className={classes.header}>
-      <Container size="md" className={classes.inner}>
-        <Image src={'./images/navbar-logo.png'} h={'70'} />
-        <Group gap={5} visibleFrom="xs">
-          {items}
-        </Group>
+      <Container size="md" className={classes.inner} style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+        <Image 
+          src={'./images/navbar-logo.png'} 
+          h={'70'} 
+          style={{ marginRight: 'auto' }}
+        />
+        {/* Only show the links if authenticated */}
+        {isAuthenticated && (
+          <Group gap={5} visibleFrom="xs">
+            {items}
+          </Group>
+        )}
       </Container>
     </header>
   );
