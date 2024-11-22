@@ -1,6 +1,7 @@
 import './table.css';
 import { useMemo } from "react";
 import { MantineReactTable, MRT_ColumnDef, useMantineReactTable } from "mantine-react-table";
+import { ImgActionModal } from '../modals/ImgActionModal';    
 
 export interface RoomData {
     roomId: string;
@@ -8,6 +9,7 @@ export interface RoomData {
     bedType: string;
     maxPax: number;
     price: number;
+    images: string;
 }
 
 interface RoomTableCreatorProps {
@@ -23,6 +25,7 @@ export function RoomTableCreator({ rooms }: RoomTableCreatorProps) {
         bedType: room.bedType,
         maxPax: room.maxPax,
         price: room.price,
+        images: room.images,
     })) : [];
 
     const columns = useMemo<MRT_ColumnDef<RoomData>[]>(() => [
@@ -56,8 +59,20 @@ export function RoomTableCreator({ rooms }: RoomTableCreatorProps) {
     const table = useMantineReactTable({
         columns: columns,
         data: remappedData,
+        enableRowActions: true,
         enablePagination: false, 
-        
+        enableRowVirtualization: true,
+        state: { 
+            showSkeletons: !remappedData ,
+            columnVisibility: {
+                totalAmount: false, 
+                amountPaid: false,  
+            },
+        },
+        positionActionsColumn: 'first',
+        renderRowActions: ({ row }) => (
+            <ImgActionModal room={remappedData[row.index]} />
+        )
     });
 
     return (
