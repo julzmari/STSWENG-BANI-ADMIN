@@ -20,15 +20,6 @@ const getReservations = async (req, res) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
 const updateReservation = async (req, res) => {
 
     try {
