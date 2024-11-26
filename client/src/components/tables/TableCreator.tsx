@@ -39,9 +39,18 @@ export function ReservationTableCreator(props: { reservations: reservationRespon
     let reservations = []
 
     if (props.page === 'today') {   
+        const today = new Date();
         reservations = props.reservations.filter((reservation: reservationResponseData) => {
-            return new Date(reservation.checkInDate ?? '').toDateString() === new Date().toDateString();
-        }) 
+            const checkInDate = reservation.checkInDate ? new Date(reservation.checkInDate) : null;
+            const checkOutDate = reservation.checkOutDate ? new Date(reservation.checkOutDate) : null;
+
+            return (
+                checkInDate &&
+                checkOutDate &&
+                today >= checkInDate &&
+                today <= checkOutDate
+            );
+        });
     } else {
         reservations = props.reservations;
     }
